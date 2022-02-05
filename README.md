@@ -46,6 +46,7 @@ Flash Chat - is just an little project made with the purpose of study mobile dev
 - **[Flutter](https://flutter.dev/)**
 - **[Firebase](https://firebase.google.com/)**
 - **[Bloc](https://pub.dev/packages/bloc)**
+- **[Clean Dart](https://github.com/Flutterando/Clean-Dart)**
 
 ---
 
