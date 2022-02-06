@@ -1,10 +1,27 @@
 abstract class UserCredentials {}
 
-class PhoneCredentials extends UserCredentials {
-  final String phone;
+class CredentialForEmailSignIn extends UserCredentials {
+  final String email;
+  final String password;
 
-  PhoneCredentials(this.phone);
+  CredentialForEmailSignIn({
+    required this.email,
+    required this.password,
+  });
 
-  // TODO: validate phone later...
+  bool validate() => true;
+}
+
+class CredentialForEmailSignUp extends UserCredentials {
+  final String displayName;
+  final String email;
+  final String password;
+
+  CredentialForEmailSignUp({
+    required this.displayName,
+    required this.email,
+    required this.password,
+  });
+
   bool validate() => true;
 }

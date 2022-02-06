@@ -1,25 +1,29 @@
 import 'package:flash_chat/src/modules/auth/domain/user_credentials.dart';
-import 'package:flash_chat/src/modules/auth/domain/user_entity.dart';
-import 'package:flash_chat/src/modules/auth/domain/auth_service.dart';
+import 'package:flash_chat/src/modules/auth/domain/auth_service_interface.dart';
 
-import 'flash_chat_auth_exception.dart';
+import '../../core/domain/flash_chat_auth_exception.dart';
 
 abstract class ISignInUseCase {
-  Future<UserEntity> call(UserCredentials credentials);
+  Future<String> call(UserCredentials credentials);
 }
 
-class SignInWithPhoneUseCase implements ISignInUseCase {
-  final AuthService authService;
+class SignInWithEmailUseCase implements ISignInUseCase {
+  final IAuthService authService;
 
-  SignInWithPhoneUseCase(this.authService);
+  SignInWithEmailUseCase(this.authService);
 
   @override
-  Future<UserEntity> call(covariant PhoneCredentials credentials) async {
+  Future<String> call(covariant CredentialForEmailSignIn credentials) async {
     if (credentials.validate()) {
-      return await authService.signInWithPhone(credentials.phone);
+      var userUID = await authService.signInWithEmail(
+        credentials.email,
+        credentials.password,
+      );
+
+      return userUID;
     } else {
       throw InvalidCredentialsException(
-        "The phone number '${credentials.phone}' is invalid.",
+        "Invalid email and/or password.",
       );
     }
   }

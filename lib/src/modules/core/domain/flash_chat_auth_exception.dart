@@ -7,3 +7,7 @@ abstract class FlashChatAuthException implements Exception {
 class InvalidCredentialsException extends FlashChatAuthException {
   InvalidCredentialsException(String message) : super(message);
 }
+
+class UserNotFoundException extends FlashChatAuthException {
+  UserNotFoundException(String message) : super(message);
+}

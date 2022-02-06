@@ -1,17 +1,14 @@
-import 'package:flash_chat/src/modules/auth/domain/auth_service.dart';
-import 'package:flash_chat/src/modules/auth/domain/user_entity.dart';
+import 'package:flash_chat/src/modules/auth/domain/auth_service_interface.dart';
 
 abstract class IGetSignedInUserUseCase {
-  UserEntity? call();
+  String? call();
 }
 
 class GetSignedInUserUseCase implements IGetSignedInUserUseCase {
-  final AuthService authService;
+  final IAuthService authService;
 
   GetSignedInUserUseCase(this.authService);
 
   @override
-  UserEntity? call() {
-    return authService.currentUser;
-  }
+  String? call() => authService.currentUserUID;
 }
