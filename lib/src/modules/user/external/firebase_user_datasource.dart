@@ -6,22 +6,16 @@ import '../infra/user_dto.dart';
 import 'user_dto_json_serializable.dart';
 
 class FirebaseUserDatasource implements IUserDatasource {
-  late final FirebaseFirestore firestore;
-  late final CollectionReference users;
+  final CollectionReference _users;
 
-  void init() {
-    var firebaseApp = Firebase.app("Flash Chat");
-
-    firestore = FirebaseFirestore.instanceFor(app: firebaseApp);
-
-    users = firestore.collection("users");
-  }
+  FirebaseUserDatasource(FirebaseApp app)
+      : _users = FirebaseFirestore.instanceFor(app: app).collection("users");
 
   @override
   Future<UserDTO> create(covariant UserDTOJsonSerializable dto) async {
     // TODO: setup a default profile image.
 
-    await users.doc(dto.uid).set(
+    await _users.doc(dto.uid).set(
           dto.toJson(),
         );
 
