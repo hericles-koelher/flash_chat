@@ -7,10 +7,10 @@ abstract class ISignUpUseCase {
   Future<String> call(UserCredentials credentials);
 }
 
-class EmailSignUpUseCase implements ISignUpUseCase {
+class SignUpWithEmailUseCase implements ISignUpUseCase {
   final IAuthService authService;
 
-  EmailSignUpUseCase(this.authService);
+  SignUpWithEmailUseCase(this.authService);
 
   @override
   Future<String> call(covariant CredentialForEmailSignUp credentials) async {

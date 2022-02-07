@@ -1,13 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flash_chat/src/modules/auth/domain/auth_service_interface.dart';
 import 'package:flash_chat/src/modules/core/domain/flash_chat_auth_exception.dart';
 
 class FirebaseAuthService implements IAuthService {
   final FirebaseAuth _firebaseAuth;
 
-  FirebaseAuthService(FirebaseApp app)
-      : _firebaseAuth = FirebaseAuth.instanceFor(app: app);
+  FirebaseAuthService(FirebaseAuth firebaseAuth) : _firebaseAuth = firebaseAuth;
 
   @override
   String? get currentUserUID => _firebaseAuth.currentUser?.uid;
