@@ -26,7 +26,7 @@ class FirebaseAuthService implements IAuthService {
       return _firebaseAuth.currentUser!.uid;
     } on FirebaseAuthException catch (e) {
       // TODO: use better messages.
-      throw InvalidCredentialsException(
+      throw InvalidCredentialException(
         e.message ?? "Something wrong happened",
       );
     }
@@ -43,7 +43,7 @@ class FirebaseAuthService implements IAuthService {
       return _firebaseAuth.currentUser!.uid;
     } on FirebaseAuthException catch (e) {
       // TODO: use better messages.
-      throw InvalidCredentialsException(
+      throw InvalidCredentialException(
         e.message ?? "Something wrong happened",
       );
     }

@@ -1,10 +1,10 @@
 import 'package:flash_chat/src/modules/auth/domain/auth_service_interface.dart';
-import 'package:flash_chat/src/modules/auth/domain/user_credentials.dart';
+import 'package:flash_chat/src/modules/auth/domain/user_credential.dart';
 
 import '../../core/domain/flash_chat_auth_exception.dart';
 
 abstract class ISignUpUseCase {
-  Future<String> call(UserCredentials credentials);
+  Future<String> call(UserCredential credential);
 }
 
 class SignUpWithEmailUseCase implements ISignUpUseCase {
@@ -13,16 +13,16 @@ class SignUpWithEmailUseCase implements ISignUpUseCase {
   SignUpWithEmailUseCase(this.authService);
 
   @override
-  Future<String> call(covariant CredentialForEmailSignUp credentials) async {
-    if (credentials.validate()) {
+  Future<String> call(covariant EmailCredential credential) async {
+    if (credential.validate()) {
       var userUID = await authService.signUpWithEmail(
-        credentials.email,
-        credentials.password,
+        credential.email,
+        credential.password,
       );
 
       return userUID;
     } else {
-      throw InvalidCredentialsException(
+      throw InvalidCredentialException(
         "Invalid email and/or password.",
       );
     }
