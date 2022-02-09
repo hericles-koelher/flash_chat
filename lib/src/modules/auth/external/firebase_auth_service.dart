@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/src/modules/auth/domain/auth_service_interface.dart';
-import 'package:flash_chat/src/modules/core/domain/flash_chat_auth_exception.dart';
+import 'package:flash_chat/src/modules/core/domain/flash_chat_exception.dart';
 
 class FirebaseAuthService implements IAuthService {
   final FirebaseAuth _firebaseAuth;

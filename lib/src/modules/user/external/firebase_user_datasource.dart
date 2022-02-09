@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -23,8 +25,15 @@ class FirebaseUserDatasource implements IUserDatasource {
   }
 
   @override
-  Future<UserDTO?> getByUID(String uid) {
-    // TODO: implement getByUID
-    throw UnimplementedError();
+  Future<UserDTO?> getByUID(String uid) async {
+    var userSnapshot = await _users.doc(uid).get();
+
+    if (userSnapshot.exists) {
+      var json = jsonDecode(userSnapshot.data() as String);
+
+      return UserDTOJsonSerializable.fromJson(json);
+    } else {
+      return null;
+    }
   }
 }

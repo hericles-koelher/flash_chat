@@ -1,4 +1,4 @@
-import 'package:flash_chat/src/modules/core/domain/flash_chat_auth_exception.dart';
+import 'package:flash_chat/src/modules/core/domain/flash_chat_exception.dart';
 
 import '../domain/user_entity.dart';
 import '../domain/user_repository_interface.dart';

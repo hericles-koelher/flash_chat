@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/src/modules/auth/external/firebase_auth_service.dart';
-import 'package:flash_chat/src/modules/core/domain/flash_chat_auth_exception.dart';
+import 'package:flash_chat/src/modules/core/domain/flash_chat_exception.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
