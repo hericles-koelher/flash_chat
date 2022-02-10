@@ -8,6 +8,7 @@ import 'package:flash_chat/src/modules/auth/domain/sign_out_use_case.dart';
 import 'package:flash_chat/src/modules/auth/domain/sign_up_use_case.dart';
 import 'package:flash_chat/src/modules/auth/external/firebase_auth_service.dart';
 import 'package:flash_chat/src/modules/auth/presenter/bloc/cubit/user_auth_cubit.dart';
+import 'package:flash_chat/src/modules/auth/presenter/pages/flash_chat_initial_page.dart';
 import 'package:flash_chat/src/modules/auth/presenter/pages/user_creation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -77,9 +78,16 @@ class FlashChat extends StatelessWidget {
   const FlashChat({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Flutter Demo',
-      home: UserCreationPage(),
+      theme: ThemeData.light().copyWith(
+        // primaryColor: Colors.amber[700],
+        colorScheme: ColorScheme.light(
+          primary: Colors.amber[700]!,
+          secondary: Colors.blue[600]!,
+        ),
+      ),
+      home: const FlashChatInitialPage(),
     );
   }
 }
