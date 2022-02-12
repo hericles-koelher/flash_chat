@@ -1,7 +1,5 @@
-import 'package:flash_chat/src/modules/auth/domain/auth_service_interface.dart';
-import 'package:flash_chat/src/modules/auth/domain/user_credential.dart';
-
-import '../../core/domain/flash_chat_exception.dart';
+import '../../core/core.dart';
+import '../auth.dart';
 
 abstract class ISignUpUseCase {
   Future<String> call(UserCredential credential);

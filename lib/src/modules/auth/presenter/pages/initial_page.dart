@@ -1,8 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 
-class FlashChatInitialPage extends StatelessWidget {
-  const FlashChatInitialPage({Key? key}) : super(key: key);
+class InitialPage extends StatelessWidget {
+  const InitialPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +14,12 @@ class FlashChatInitialPage extends StatelessWidget {
           const Spacer(
             flex: 4,
           ),
-          Image.asset(
-            "images/logo.png",
-            height: 120,
+          Hero(
+            tag: "logoFlashChat()",
+            child: Image.asset(
+              "images/logo.png",
+              height: 120,
+            ),
           ),
           const SizedBox(
             height: 15,
@@ -49,7 +53,9 @@ class FlashChatInitialPage extends StatelessWidget {
                 flex: 3,
                 child: ElevatedButton(
                   child: const Text("Register"),
-                  onPressed: () {},
+                  onPressed: () {
+                    context.beamToNamed("/auth/register");
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),

@@ -1,4 +1,4 @@
-import 'package:flash_chat/src/modules/auth/domain/auth_service_interface.dart';
+import '../auth.dart';
 
 abstract class ISignOutUseCase {
   Future<void> call();

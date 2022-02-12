@@ -1,11 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:flash_chat/src/modules/auth/domain/get_signed_in_user_use_case.dart';
-import 'package:flash_chat/src/modules/auth/domain/sign_in_use_case.dart';
-import 'package:flash_chat/src/modules/auth/domain/sign_out_use_case.dart';
-import 'package:flash_chat/src/modules/auth/domain/sign_up_use_case.dart';
-import 'package:flash_chat/src/modules/auth/domain/user_credential.dart';
-import 'package:flash_chat/src/modules/core/domain/flash_chat_exception.dart';
 import 'package:meta/meta.dart';
+
+import '../../../core/core.dart';
+import '../../auth.dart';
 
 part 'user_auth_state.dart';
 

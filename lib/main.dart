@@ -1,93 +1,60 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flash_chat/firebase_options.dart';
-import 'package:flash_chat/src/modules/auth/domain/auth_service_interface.dart';
-import 'package:flash_chat/src/modules/auth/domain/get_signed_in_user_use_case.dart';
-import 'package:flash_chat/src/modules/auth/domain/sign_in_use_case.dart';
-import 'package:flash_chat/src/modules/auth/domain/sign_out_use_case.dart';
-import 'package:flash_chat/src/modules/auth/domain/sign_up_use_case.dart';
-import 'package:flash_chat/src/modules/auth/external/firebase_auth_service.dart';
-import 'package:flash_chat/src/modules/auth/presenter/bloc/cubit/user_auth_cubit.dart';
-import 'package:flash_chat/src/modules/auth/presenter/pages/flash_chat_initial_page.dart';
-import 'package:flash_chat/src/modules/auth/presenter/pages/user_creation_page.dart';
+import 'package:flash_chat/router_creator.dart';
+import 'package:flash_chat/src/modules/auth/auth.dart';
+import 'package:flash_chat/src/modules/core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-void main() async {
+import 'injection.dart';
+
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await inject();
+  inject();
 
-  runApp(const FlashChat());
-}
-
-Future<void> inject() async {
-  var getIt = GetIt.I;
-
-  getIt.registerSingletonAsync<FirebaseApp>(
-    () => Firebase.initializeApp(
-      name: "Flash Chat",
-      options: DefaultFirebaseOptions.android,
-    ),
-  );
-
-  getIt.registerSingletonWithDependencies<IAuthService>(
-    () => FirebaseAuthService(
-      FirebaseAuth.instanceFor(app: getIt()),
-    ),
-    dependsOn: [FirebaseApp],
-  );
-
-  getIt.registerSingletonWithDependencies<IGetSignedInUserUseCase>(
-    () => GetSignedInUserUseCase(getIt()),
-    dependsOn: [IAuthService],
-  );
-
-  getIt.registerSingletonWithDependencies<ISignUpUseCase>(
-    () => SignUpWithEmailUseCase(getIt()),
-    dependsOn: [IAuthService],
-  );
-
-  getIt.registerSingletonWithDependencies<ISignInUseCase>(
-    () => SignInWithEmailUseCase(getIt()),
-    dependsOn: [IAuthService],
-  );
-
-  getIt.registerSingletonWithDependencies<ISignOutUseCase>(
-    () => SignOutUseCase(getIt()),
-    dependsOn: [IAuthService],
-  );
-
-  getIt.registerSingletonWithDependencies<UserAuthCubit>(
-    () => UserAuthCubit(
-      emailSignInUseCase: getIt(),
-      emailSignUpUseCase: getIt(),
-      getSignedInUserUseCase: getIt(),
-      signOutUseCase: getIt(),
-    ),
-    dependsOn: [
-      ISignUpUseCase,
-      ISignInUseCase,
-      ISignOutUseCase,
-      IGetSignedInUserUseCase,
-    ],
-  );
+  runApp(FlashChat());
 }
 
 class FlashChat extends StatelessWidget {
-  const FlashChat({Key? key}) : super(key: key);
+  final Future<IRouterCreator> futureBeamerRouter;
+
+  FlashChat({Key? key})
+      : // Delaying future just to play with animations...
+        futureBeamerRouter = Future.delayed(
+          const Duration(seconds: 5),
+          () => GetIt.I.getAsync<UserAuthCubit>().then(
+                (cubit) => BeamerRouterCreator(cubit),
+              ),
+        ),
+        super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData.light().copyWith(
-        // primaryColor: Colors.amber[700],
-        colorScheme: ColorScheme.light(
-          primary: Colors.amber[700]!,
-          secondary: Colors.blue[600]!,
-        ),
-      ),
-      home: const FlashChatInitialPage(),
+    return FutureBuilder(
+      future: futureBeamerRouter,
+      builder: (_, snapshot) {
+        if (snapshot.hasData) {
+          var beamerRouter = snapshot.data as BeamerRouterCreator;
+
+          return MaterialApp.router(
+            title: 'Flutter Demo',
+            theme: ThemeData.light().copyWith(
+              // primaryColor: Colors.amber[700],
+              colorScheme: ColorScheme.light(
+                primary: Colors.amber[700]!,
+                secondary: Colors.blue[600]!,
+              ),
+            ),
+            routeInformationParser: beamerRouter.routeInformationParser,
+            routerDelegate: beamerRouter.routerDelegate,
+          );
+        } else {
+          return const Material(
+            child: Center(
+              child: AnimatedLogo(),
+            ),
+          );
+        }
+      },
     );
   }
 }
