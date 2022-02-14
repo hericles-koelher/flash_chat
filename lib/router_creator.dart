@@ -9,24 +9,42 @@ abstract class IRouterCreator {
   RouteInformationParser<RouteInformation> get routeInformationParser;
 
   RouterDelegate<RouteInformation> get routerDelegate;
+
+  BackButtonDispatcher get backButtonDispatcher;
 }
 
 class BeamerRouterCreator extends IRouterCreator {
   final _ListenableUserAuthState _authState;
+  RouteInformationParser<RouteInformation>? _routeInformationParser;
+  RouterDelegate<RouteInformation>? _routerDelegate;
+  BackButtonDispatcher? _backButtonDispatcher;
 
   BeamerRouterCreator(UserAuthCubit userAuthCubit)
       : _authState = _ListenableUserAuthState(userAuthCubit);
 
   @override
-  RouteInformationParser<RouteInformation> get routeInformationParser =>
-      BeamerParser();
+  RouteInformationParser<RouteInformation> get routeInformationParser {
+    if (_routeInformationParser != null) {
+      return _routeInformationParser!;
+    } else {
+      // Assign _routeInformationParser and return it.
+      return _routeInformationParser = BeamerParser();
+    }
+  }
 
   @override
-  RouterDelegate<RouteInformation> get routerDelegate => BeamerDelegate(
+  RouterDelegate<RouteInformation> get routerDelegate {
+    if (_routerDelegate != null) {
+      return _routerDelegate!;
+    } else {
+      // Assign _routerDelegate and return it.
+      return _routerDelegate = BeamerDelegate(
         updateListenable: _authState,
         guards: [
           BeamGuard(
-            pathPatterns: ["/auth"],
+            pathPatterns: [
+              RegExp(r"^\/auth(\/.*)?$"),
+            ],
             check: (context, state) =>
                 _authState.value is UserUnauthenticated ||
                 _authState.value is UserAuthLoading,
@@ -34,21 +52,37 @@ class BeamerRouterCreator extends IRouterCreator {
             beamToNamed: (_, __) => "/",
           ),
           BeamGuard(
-            pathPatterns: ["/home"],
+            pathPatterns: [
+              RegExp(r"^(?!\/auth(\/.*)?).*$"),
+            ],
             check: (context, state) => _authState.value is UserAuthenticated,
             // if check is false them beam to "/auth"
             beamToNamed: (_, __) => "/auth",
           ),
         ],
-        initialPath: "/home",
+        initialPath: "/",
         locationBuilder: RoutesLocationBuilder(
           routes: {
-            "/home": (_, __, ___) => const PlaceholderPage(),
-            "/auth": (_, __, ___) => const InitialPage(),
+            "/": (_, __, ___) => const PlaceholderPage(),
+            "/auth": (_, __, ___) => const AuthPage(),
             "/auth/register": (_, __, ___) => const RegisterPage(),
           },
         ),
       );
+    }
+  }
+
+  @override
+  BackButtonDispatcher get backButtonDispatcher {
+    if (_backButtonDispatcher != null) {
+      return _backButtonDispatcher!;
+    } else {
+      // Assign _backButtonDispatcher and return it.
+      return _backButtonDispatcher = BeamerBackButtonDispatcher(
+        delegate: routerDelegate as BeamerDelegate,
+      );
+    }
+  }
 }
 
 class _ListenableUserAuthState extends ValueNotifier<UserAuthState> {

@@ -9,16 +9,23 @@ Future<void> main() async {
 
   await initializeApp();
 
-  runApp(const FlashChat());
+  runApp(
+    FlashChat(
+      routerCreator: BeamerRouterCreator(GetIt.I()),
+    ),
+  );
 }
 
 class FlashChat extends StatelessWidget {
-  const FlashChat({Key? key}) : super(key: key);
+  final IRouterCreator routerCreator;
+
+  const FlashChat({
+    Key? key,
+    required this.routerCreator,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var routerCreator = BeamerRouterCreator(GetIt.I());
-
     return MaterialApp.router(
       title: 'Flash Chat',
       theme: ThemeData.light().copyWith(
@@ -30,6 +37,7 @@ class FlashChat extends StatelessWidget {
       ),
       routeInformationParser: routerCreator.routeInformationParser,
       routerDelegate: routerCreator.routerDelegate,
+      backButtonDispatcher: routerCreator.backButtonDispatcher,
     );
   }
 }

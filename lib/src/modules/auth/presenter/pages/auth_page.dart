@@ -2,8 +2,8 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 
-class InitialPage extends StatelessWidget {
-  const InitialPage({Key? key}) : super(key: key);
+class AuthPage extends StatelessWidget {
+  const AuthPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +14,13 @@ class InitialPage extends StatelessWidget {
           const Spacer(
             flex: 4,
           ),
-          Hero(
-            tag: "logoFlashChat()",
-            child: Image.asset(
-              "images/logo.png",
-              height: 120,
+          Flexible(
+            child: Hero(
+              tag: "logo",
+              child: Image.asset(
+                "images/logo.png",
+                height: 120,
+              ),
             ),
           ),
           const SizedBox(
@@ -50,39 +52,46 @@ class InitialPage extends StatelessWidget {
           Row(
             children: [
               const Spacer(),
-              Expanded(
+              createExpansiveButton(
                 flex: 3,
-                child: ElevatedButton(
-                  child: const Text("Register"),
-                  onPressed: () {
-                    context.beamToNamed("/auth/register");
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                ),
+                label: "Register",
+                callback: () {
+                  Beamer.of(context).beamToNamed("/auth/register");
+                },
+                color: Theme.of(context).colorScheme.secondary,
               ),
               const Spacer(),
-              Expanded(
+              createExpansiveButton(
                 flex: 3,
-                child: ElevatedButton(
-                  child: const Text("Login"),
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).colorScheme.secondary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                ),
+                label: "Login",
+                callback: () {},
               ),
               const Spacer(),
             ],
           ),
           const Spacer(),
         ],
+      ),
+    );
+  }
+
+  Widget createExpansiveButton({
+    required int flex,
+    required String label,
+    required VoidCallback callback,
+    Color? color,
+  }) {
+    return Expanded(
+      flex: flex,
+      child: ElevatedButton(
+        child: Text(label),
+        onPressed: callback,
+        style: ElevatedButton.styleFrom(
+          primary: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
       ),
     );
   }

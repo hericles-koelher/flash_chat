@@ -8,7 +8,7 @@ export 'domain/user_credential.dart';
 
 // Presenter
 export 'presenter/cubit/user_auth_cubit.dart';
-export 'presenter/pages/initial_page.dart';
+export 'presenter/pages/auth_page.dart';
 export 'presenter/pages/register_page.dart';
 
 // External
