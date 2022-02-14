@@ -33,7 +33,8 @@ class InitialPage extends StatelessWidget {
                   TypewriterAnimatedText(
                     "Flash Chat",
                     cursor: "",
-                    speed: const Duration(milliseconds: 150),
+                    speed: const Duration(milliseconds: 175),
+                    curve: Curves.easeIn,
                     textStyle: const TextStyle(
                       fontSize: 45.0,
                       fontWeight: FontWeight.w900,
