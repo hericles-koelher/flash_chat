@@ -1,4 +1,3 @@
-import '../../core/core.dart';
 import '../auth.dart';
 
 abstract class ISignUpUseCase {
@@ -12,17 +11,13 @@ class SignUpWithEmailUseCase implements ISignUpUseCase {
 
   @override
   Future<String> call(covariant EmailCredential credential) async {
-    if (credential.validate()) {
-      var userUID = await authService.signUpWithEmail(
-        credential.email,
-        credential.password,
-      );
+    credential.validate();
 
-      return userUID;
-    } else {
-      throw InvalidCredentialException(
-        "Invalid email and/or password.",
-      );
-    }
+    var userUID = await authService.signUpWithEmail(
+      credential.email,
+      credential.password,
+    );
+
+    return userUID;
   }
 }

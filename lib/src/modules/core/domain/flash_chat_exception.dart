@@ -5,7 +5,26 @@ abstract class FlashChatException implements Exception {
 }
 
 class InvalidCredentialException extends FlashChatException {
-  InvalidCredentialException(String message) : super(message);
+  final String? emailMessage;
+  final String? passwordMessage;
+
+  InvalidCredentialException({
+    required String message,
+    this.emailMessage,
+    this.passwordMessage,
+  }) : super(message);
+
+  InvalidCredentialException copyWith({
+    String? message,
+    String? emailMessage,
+    String? passwordMessage,
+  }) {
+    return InvalidCredentialException(
+      message: message ?? this.message,
+      emailMessage: emailMessage ?? this.emailMessage,
+      passwordMessage: passwordMessage ?? this.passwordMessage,
+    );
+  }
 }
 
 class UserNotFoundException extends FlashChatException {

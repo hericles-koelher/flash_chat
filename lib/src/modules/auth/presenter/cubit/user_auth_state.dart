@@ -8,7 +8,7 @@ class UserAuthLoading extends UserAuthState {}
 class UserUnauthenticated extends UserAuthState {}
 
 class UserUnauthenticatedError extends UserUnauthenticated {
-  final FlashChatException exception;
+  final InvalidCredentialException exception;
 
   UserUnauthenticatedError(this.exception);
 }
