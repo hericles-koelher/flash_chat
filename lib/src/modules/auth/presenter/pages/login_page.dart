@@ -6,19 +6,18 @@ import 'package:get_it/get_it.dart';
 import '../../../commons/commons.dart';
 import '../../auth.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
-  final GlobalKey<FormState> _registerFormKey =
-      GlobalKey(debugLabel: "register-form");
+class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<FormState> _loginFormKey =
+      GlobalKey(debugLabel: "login-form");
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _passwordConfirmationController = TextEditingController();
   final UserAuthCubit _authCubit = GetIt.I();
   OverlayEntry? _overlayEntry;
   bool _pageWasCreatedNow = true;
@@ -72,7 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     const Text(
-                      "Register",
+                      "Login",
                       style: TextStyle(
                         fontSize: 45.0,
                         fontWeight: FontWeight.w900,
@@ -95,7 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     }
 
                     return Form(
-                      key: _registerFormKey,
+                      key: _loginFormKey,
                       child: Column(
                         children: [
                           if (!_pageWasCreatedNow &&
@@ -131,17 +130,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             errorText: passwordErrorText,
                             obscureText: true,
                           ),
-                          AuthTextFormField(
-                              controller: _passwordConfirmationController,
-                              labelText: "Password Confirm",
-                              obscureText: true,
-                              validator: (String? text) {
-                                if ((text ?? "") != _passwordController.text) {
-                                  return "This field must be equal to Password field.";
-                                } else {
-                                  return null;
-                                }
-                              }),
                           const SizedBox(height: 25),
                           Row(
                             children: [
@@ -157,14 +145,13 @@ class _RegisterPageState extends State<RegisterPage> {
                               const Spacer(),
                               ExpansiveElevatedButton(
                                 flex: 3,
-                                label: "Register",
+                                label: "Login",
                                 callback: () {
-                                  if (_registerFormKey.currentState!
-                                      .validate()) {
+                                  if (_loginFormKey.currentState!.validate()) {
                                     // update flag value
                                     _pageWasCreatedNow = false;
 
-                                    _authCubit.signUpWitEmail(
+                                    _authCubit.signInWitEmail(
                                       _emailController.text,
                                       _passwordController.text,
                                     );

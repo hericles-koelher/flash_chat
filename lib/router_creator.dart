@@ -66,6 +66,7 @@ class BeamerRouterCreator extends IRouterCreator {
             "/": (_, __, ___) => const PlaceholderPage(),
             "/auth": (_, __, ___) => const AuthPage(),
             "/auth/register": (_, __, ___) => const RegisterPage(),
+            "/auth/login": (_, __, ___) => const LoginPage(),
           },
         ),
       );

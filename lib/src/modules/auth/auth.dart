@@ -10,6 +10,7 @@ export 'domain/user_credential.dart';
 export 'presenter/cubit/user_auth_cubit.dart';
 export 'presenter/pages/auth_page.dart';
 export 'presenter/pages/register_page.dart';
+export 'presenter/pages/login_page.dart';
 
 // External
 export 'external/firebase_auth_service.dart';

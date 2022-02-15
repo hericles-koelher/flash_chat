@@ -2,6 +2,8 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 
+import '../../../commons/commons.dart';
+
 class AuthPage extends StatelessWidget {
   const AuthPage({Key? key}) : super(key: key);
 
@@ -52,7 +54,7 @@ class AuthPage extends StatelessWidget {
           Row(
             children: [
               const Spacer(),
-              createExpansiveButton(
+              ExpansiveElevatedButton(
                 flex: 3,
                 label: "Register",
                 callback: () {
@@ -61,37 +63,18 @@ class AuthPage extends StatelessWidget {
                 color: Theme.of(context).colorScheme.secondary,
               ),
               const Spacer(),
-              createExpansiveButton(
+              ExpansiveElevatedButton(
                 flex: 3,
                 label: "Login",
-                callback: () {},
+                callback: () {
+                  Beamer.of(context).beamToNamed("/auth/login");
+                },
               ),
               const Spacer(),
             ],
           ),
           const Spacer(),
         ],
-      ),
-    );
-  }
-
-  Widget createExpansiveButton({
-    required int flex,
-    required String label,
-    required VoidCallback callback,
-    Color? color,
-  }) {
-    return Expanded(
-      flex: flex,
-      child: ElevatedButton(
-        child: Text(label),
-        onPressed: callback,
-        style: ElevatedButton.styleFrom(
-          primary: color,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-        ),
       ),
     );
   }
