@@ -1,5 +1,7 @@
 abstract class IAuthService {
-  String? get currentUserUID;
+  String? get userUID;
+
+  Stream<String?> userUIDStream();
 
   Future<String> signInWithEmail(
     String email,

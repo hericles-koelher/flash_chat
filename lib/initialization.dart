@@ -21,8 +21,8 @@ Future<void> initializeApp() async {
     ),
   );
 
-  getIt.registerSingleton<IGetSignedInUserUseCase>(
-    GetSignedInUserUseCase(getIt()),
+  getIt.registerSingleton<IGetCurrentUserUseCase>(
+    GetCurrentUserUseCase(getIt()),
   );
 
   getIt.registerSingleton<ISignUpUseCase>(
@@ -41,7 +41,7 @@ Future<void> initializeApp() async {
     UserAuthCubit(
       emailSignInUseCase: getIt(),
       emailSignUpUseCase: getIt(),
-      getSignedInUserUseCase: getIt(),
+      getCurrentUserUseCase: getIt(),
       signOutUseCase: getIt(),
     ),
   );

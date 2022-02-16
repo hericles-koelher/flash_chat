@@ -1,6 +1,6 @@
 // Domain
 export 'domain/auth_service_interface.dart';
-export 'domain/get_signed_in_user_use_case.dart';
+export 'domain/get_current_user_use_case.dart';
 export 'domain/sign_in_use_case.dart';
 export 'domain/sign_up_use_case.dart';
 export 'domain/sign_out_use_case.dart';

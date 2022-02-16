@@ -101,6 +101,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           if (!_pageWasCreatedNow &&
                               state is UserUnauthenticatedError)
                             Container(
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 35,
+                                vertical: 10,
+                              ),
                               padding: const EdgeInsets.symmetric(
                                 vertical: 10,
                                 horizontal: 15,
@@ -118,6 +122,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 style: const TextStyle(
                                   color: Colors.white,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
                           AuthTextFormField(

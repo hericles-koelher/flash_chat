@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -10,9 +12,10 @@ class UserAuthCubit extends Cubit<UserAuthState> {
   final ISignUpUseCase _emailSignUpUseCase;
   final ISignInUseCase _emailSignInUseCase;
   final ISignOutUseCase _signOutUseCase;
+  late final StreamSubscription _userUIDSubscription;
 
   UserAuthCubit({
-    required IGetSignedInUserUseCase getSignedInUserUseCase,
+    required IGetCurrentUserUseCase getCurrentUserUseCase,
     required ISignUpUseCase emailSignUpUseCase,
     required ISignInUseCase emailSignInUseCase,
     required ISignOutUseCase signOutUseCase,
@@ -20,21 +23,29 @@ class UserAuthCubit extends Cubit<UserAuthState> {
         _emailSignInUseCase = emailSignInUseCase,
         _signOutUseCase = signOutUseCase,
         super(
-          getSignedInUserUseCase() != null
-              ? UserAuthenticated(getSignedInUserUseCase()!)
+          getCurrentUserUseCase() != null
+              ? UserAuthenticated(getCurrentUserUseCase()!)
               : UserUnauthenticated(),
-        );
+        ) {
+    _userUIDSubscription = getCurrentUserUseCase.stream().listen(
+      (String? userUID) {
+        if (userUID != null) {
+          emit(UserAuthenticated(userUID));
+        } else {
+          emit(UserUnauthenticated());
+        }
+      },
+    );
+  }
 
   Future<void> signUpWitEmail(String email, String password) async {
     if (state is UserUnauthenticated) {
       emit(UserAuthLoading());
 
       try {
-        var userUID = await _emailSignUpUseCase(
+        await _emailSignUpUseCase(
           EmailCredential(email: email, password: password),
         );
-
-        emit(UserAuthenticated(userUID));
       } on InvalidCredentialException catch (e) {
         emit(UserUnauthenticatedError(e));
       }
@@ -46,11 +57,9 @@ class UserAuthCubit extends Cubit<UserAuthState> {
       emit(UserAuthLoading());
 
       try {
-        var userUID = await _emailSignInUseCase(
+        await _emailSignInUseCase(
           EmailCredential(email: email, password: password),
         );
-
-        emit(UserAuthenticated(userUID));
       } on InvalidCredentialException catch (e) {
         emit(UserUnauthenticatedError(e));
       }
@@ -60,8 +69,15 @@ class UserAuthCubit extends Cubit<UserAuthState> {
   Future<void> signOut() async {
     if (state is UserAuthenticated) {
       emit(UserAuthLoading());
+
       await _signOutUseCase();
-      emit(UserUnauthenticated());
     }
+  }
+
+  @override
+  Future<void> close() {
+    _userUIDSubscription.cancel();
+
+    return super.close();
   }
 }
