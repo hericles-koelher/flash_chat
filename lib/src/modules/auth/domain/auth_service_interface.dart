@@ -14,4 +14,6 @@ abstract class IAuthService {
   );
 
   Future<void> signOut();
+
+  Future<void> deleteAccount();
 }

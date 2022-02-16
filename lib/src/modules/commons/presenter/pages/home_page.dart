@@ -2,7 +2,6 @@ import 'package:flash_chat/src/modules/auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-// Just a widget page used to test router...
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -19,7 +18,22 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
               child: const Text("DELETE ACCOUNT"),
               onPressed: () {
-                // TODO: create this use case...
+                GetIt.I<UserAuthCubit>().deleteAccount(
+                  onError: (message) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text("Account delete action error"),
+                          content: Text(
+                            message,
+                            textAlign: TextAlign.center,
+                          ),
+                        );
+                      },
+                    );
+                  },
+                );
               },
               style: ElevatedButton.styleFrom(
                 primary: Theme.of(context).colorScheme.secondary,

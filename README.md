@@ -22,7 +22,7 @@
 </p>
 
 <h4 align="center">
-	 Status: Under Development
+	 Status: Finished
 </h4>
 
 <p align="center">
@@ -54,13 +54,25 @@ Flash Chat - is just an little project made with the purpose of study mobile dev
 
 - [x] User Register
 - [x] User login/logout
-- [ ] User account delete
+- [x] User account delete
 
 ---
 
 ## Application
 
-**Session under development**
+Initially i was planning to create a chat app, but it was necessary to use [Firebase - Cloud Functions](https://firebase.google.com/docs/functions), and for that I would need to change my plan from Spark (Free) to Blaze (Paid), so I ended up deciding to do only the authentication part to learn /practice, and with that this app became just an example of using Firebase Auth with Bloc.
+
+### Demo
+
+<p align="center">
+  <img alt="App Startup" title="#AppStartup" src="./images/readme/fc_startup.gif" width="200px">
+
+  <img alt="Register" title="#Register" src="./images/readme/fc_register.gif" width="200px">
+
+  <img alt="Logout And Login" title="#LogoutAndLogin" src="./images/readme/fc_logout_and_login.gif" width="200px">
+
+  <img alt="Delete Account" title="#DeleteAccount" src="./images/readme/fc_delete_account.gif" width="200px">
+</p>
 
 ---
 

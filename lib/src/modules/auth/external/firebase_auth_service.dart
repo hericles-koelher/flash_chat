@@ -83,4 +83,15 @@ class FirebaseAuthService implements IAuthService {
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }
+
+  @override
+  Future<void> deleteAccount() async {
+    try {
+      await _firebaseAuth.currentUser?.delete();
+    } on FirebaseAuthException {
+      throw DeleteAccountException(
+        "User's last sign-in time does not meet the security threshold.",
+      );
+    }
+  }
 }

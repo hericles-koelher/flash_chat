@@ -27,6 +27,6 @@ class InvalidCredentialException extends FlashChatException {
   }
 }
 
-class UserNotFoundException extends FlashChatException {
-  UserNotFoundException(String message) : super(message);
+class DeleteAccountException extends FlashChatException {
+  DeleteAccountException(String message) : super(message);
 }

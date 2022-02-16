@@ -37,12 +37,17 @@ Future<void> initializeApp() async {
     SignOutUseCase(getIt()),
   );
 
+  getIt.registerSingleton<IDeleteAccountUseCase>(
+    DeleteAccountUseCase(getIt()),
+  );
+
   getIt.registerSingleton(
     UserAuthCubit(
       emailSignInUseCase: getIt(),
       emailSignUpUseCase: getIt(),
       getCurrentUserUseCase: getIt(),
       signOutUseCase: getIt(),
+      deleteAccountUseCase: getIt(),
     ),
   );
 }

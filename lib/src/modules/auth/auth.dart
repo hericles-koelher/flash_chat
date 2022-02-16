@@ -5,6 +5,7 @@ export 'domain/sign_in_use_case.dart';
 export 'domain/sign_up_use_case.dart';
 export 'domain/sign_out_use_case.dart';
 export 'domain/user_credential.dart';
+export 'domain/delete_account_use_case.dart';
 
 // Presenter
 export 'presenter/cubit/user_auth_cubit.dart';

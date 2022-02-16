@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/painting.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/core.dart';
@@ -12,6 +13,7 @@ class UserAuthCubit extends Cubit<UserAuthState> {
   final ISignUpUseCase _emailSignUpUseCase;
   final ISignInUseCase _emailSignInUseCase;
   final ISignOutUseCase _signOutUseCase;
+  final IDeleteAccountUseCase _deleteAccountUseCase;
   late final StreamSubscription _userUIDSubscription;
 
   UserAuthCubit({
@@ -19,9 +21,11 @@ class UserAuthCubit extends Cubit<UserAuthState> {
     required ISignUpUseCase emailSignUpUseCase,
     required ISignInUseCase emailSignInUseCase,
     required ISignOutUseCase signOutUseCase,
+    required IDeleteAccountUseCase deleteAccountUseCase,
   })  : _emailSignUpUseCase = emailSignUpUseCase,
         _emailSignInUseCase = emailSignInUseCase,
         _signOutUseCase = signOutUseCase,
+        _deleteAccountUseCase = deleteAccountUseCase,
         super(
           getCurrentUserUseCase() != null
               ? UserAuthenticated(getCurrentUserUseCase()!)
@@ -71,6 +75,18 @@ class UserAuthCubit extends Cubit<UserAuthState> {
       emit(UserAuthLoading());
 
       await _signOutUseCase();
+    }
+  }
+
+  Future<void> deleteAccount({
+    required FutureOr<void> Function(String) onError,
+  }) async {
+    try {
+      if (state is UserAuthenticated) {
+        await _deleteAccountUseCase();
+      }
+    } on DeleteAccountException catch (e) {
+      await onError(e.message);
     }
   }
 
