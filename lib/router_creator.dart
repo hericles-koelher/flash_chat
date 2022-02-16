@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:beamer/beamer.dart';
-import 'package:flash_chat/placeholder_page.dart';
+import 'package:flash_chat/src/modules/commons/presenter/pages/home_page.dart';
 import 'package:flash_chat/src/modules/auth/auth.dart';
 import 'package:flutter/widgets.dart';
 
@@ -63,7 +63,7 @@ class BeamerRouterCreator extends IRouterCreator {
         initialPath: "/",
         locationBuilder: RoutesLocationBuilder(
           routes: {
-            "/": (_, __, ___) => const PlaceholderPage(),
+            "/": (_, __, ___) => const HomePage(),
             "/auth": (_, __, ___) => const AuthPage(),
             "/auth/register": (_, __, ___) => const RegisterPage(),
             "/auth/login": (_, __, ___) => const LoginPage(),

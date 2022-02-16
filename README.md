@@ -3,7 +3,7 @@
 </h1>
 
 <h3 align="center">
-    A simple chat app.
+    <s>A simple chat app.</s> Just a Firebase Auth example app.
 </h3>
 
 <p align="center">
@@ -52,9 +52,9 @@ Flash Chat - is just an little project made with the purpose of study mobile dev
 
 ## Features
 
-- [ ] User Register
-- [ ] User login/logout
-- [ ] Chat with other users
+- [x] User Register
+- [x] User login/logout
+- [ ] User account delete
 
 ---
 
